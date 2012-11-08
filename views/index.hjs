@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html {{#user}}
+        data-user-name="{{ name }}"
+        data-user-id="{{ id }}"
+      {{/user}}>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="/javascripts/underscore-min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    {{#user}}
+      <script src="/javascripts/client.js"></script>
+    {{/user}}
+  </head>
+  <body>
+    <div class="container">
+      <h1>{{ title }}</h1>
+      {{^user}}
+        <a href="/auth/twitter">Sign in with Twitter</a>
+      {{/user}}
+
+      {{#user}}
+        <a href="/logout">Logout</a>
+        <form class="post-form">
+          <input type="text" class="post-form-body" />
+          <input type="submit" class="post-form-button" value="投稿" />
+        </form>
+        <div class="timeline">
+        </div>
+      {{/user}}
+    </div>
+
+    <script type="text/x-template" id="entry-template">
+      <div class="entry">
+        <div class="entry-user">
+          <%- name %>
+        </div>
+        <div class="entry-body">
+          <%- body %>
+        </div>
+      </div>
+    </script>
+  </body>
+</html>

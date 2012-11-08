@@ -1,0 +1,28 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.post-form {
+  height: 40px;
+}
+
+.post-form-body {
+  width: 500px;
+  font-size: 24px;
+}
+
+.post-form-button {
+  font-size: 24px;
+}
+
+.entry .entry-user {
+  display: inline-block;
+}
+.entry .entry-body {
+  display: inline-block;
+}

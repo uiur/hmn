@@ -1,0 +1,8 @@
+// 定数の置き場
+module.exports = {
+  session_secret: 'SECRET',
+  twitter: {
+    consumer_key: "YOUR CONSUMER KEY",
+    consumer_secret: "YOUR CONSUMER SECRET"
+  }
+};

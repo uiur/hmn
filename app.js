@@ -91,10 +91,10 @@ io.configure(function () {
 
     var cookie = handshakeData.headers.cookie
       , signedCookie = parseCookie(cookie)['connect.sid'];
-    
+
     var sessionID = connect.utils.parseSignedCookie(signedCookie, Config.session_secret);
 
-    sessionStore.get(sessionID, function (err, session) { 
+    sessionStore.get(sessionID, function (err, session) {
       if (err) {
         callback(err.message, false);
       } else {

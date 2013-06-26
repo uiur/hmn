@@ -1,7 +1,6 @@
 var redis = require('redis')
   , redisClient = require('../lib/redis')
   , should = require('should')
-  , async = require('async')
   , User = require('./../models/user');
 
 var Helper = {

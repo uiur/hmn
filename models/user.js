@@ -12,33 +12,30 @@
  * hmn:user:name:uiureo
  */
 
-var REDIS_PREFIX = 'hmn:';
-
-var redisClient = module.parent.exports.redisClient;
+var redisClient = require('../lib/redis');
 
 var User = {
   find : function (id, callback) {
-    redisClient.get(REDIS_PREFIX + 'user:id:' + id, function (err, user_str) {
-      callback(err, JSON.parse(user_str));
+    redisClient.jget('user:id:' + id, function (err, user) {
+      callback(err, user);
     });
   },
 
   findByName : function (name, callback) {
-    redisClient.get(REDIS_PREFIX + 'user:name:' + name, function (err, user_str) {
-      callback(err, JSON.parse(user_str));
+    redisClient.jget('user:name:' + name, function (err, user) {
+      callback(err, user);
     });
   },
 
   create : function (user, callback) {
-    redisClient.incr(REDIS_PREFIX + 'global:user_id', function (err, id) {
+    redisClient.incr('global:user_id', function (err, id) {
       user.id = id;
-      var data = JSON.stringify(user);
 
-      redisClient.set(REDIS_PREFIX + 'user:id:' + user.id, data);
+      redisClient.jset('user:id:' + user.id, user);
 
-      redisClient.set(REDIS_PREFIX + 'user:name:' + user.name, data, function () {
-        callback(null, user);
-      });
+      redisClient.jset('user:name:' + user.name, user);
+
+      callback(null, user);
     });
   },
 

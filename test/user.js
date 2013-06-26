@@ -1,31 +1,14 @@
 var redis = require('redis')
-  , redisClient = exports.redisClient = redis.createClient()
+  , redisClient = require('../lib/redis')
   , should = require('should')
   , async = require('async')
   , User = require('./../models/user');
 
-// 簡単のためuserのid と name は同じにする
 var Helper = {
   reset: function (done) {
     var self = this;
 
-    redisClient.del('hmn:global:user_id', function (err, id) {
-      var size = id, tasks = [];
-      for(var i = 0; i < size; i++) {
-        tasks.push(function (cb) { self.removeUser(i, cb); });
-      }
-      async.parallel(tasks, done);
-    });
-  },
-  resetId: function (cb) {
-    redisClient.del('hmn:global:user_id', cb);
-  },
-  removeUser: function (id, done) {
-    async.parallel([
-      function (cb) { redisClient.del('hmn:user:id:' + id, cb);
- },
-      function (cb) { redisClient.del('hmn:user:name:' + id, cb); }
-    ], done);
+    redisClient.flushdb(done);
   }
 };
 

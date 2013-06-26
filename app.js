@@ -12,7 +12,6 @@ var express = require('express')
   , path = require('path')
   , Config = require('./config')
   , TwitterStrategy = require('passport-twitter').Strategy
-  , redisClient = exports.redisClient = require('redis').createClient()
   , MemoryStore = express.session.MemoryStore
   , sessionStore = new MemoryStore()
   , parseCookie = require('cookie').parse;

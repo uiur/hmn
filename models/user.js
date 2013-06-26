@@ -34,10 +34,10 @@ var User = {
       user.id = id;
       var data = JSON.stringify(user);
 
-      redisClient.set(REDIS_PREFIX + 'user:id:' + user.id, data, function () {
-        redisClient.set(REDIS_PREFIX + 'user:name:' + user.name, data, function () {
-          callback(null, user);
-        });
+      redisClient.set(REDIS_PREFIX + 'user:id:' + user.id, data);
+
+      redisClient.set(REDIS_PREFIX + 'user:name:' + user.name, data, function () {
+        callback(null, user);
       });
     });
   },

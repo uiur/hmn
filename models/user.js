@@ -16,23 +16,20 @@ var REDIS_PREFIX = 'hmn:';
 
 var redisClient = module.parent.exports.redisClient;
 
-var User = (function () {
-  var that = {};
-
-  // exports
-  that.find = function (id, callback) {
+var User = {
+  find : function (id, callback) {
     redisClient.get(REDIS_PREFIX + 'user:id:' + id, function (err, user_str) {
       callback(err, JSON.parse(user_str));
     });
-  };
+  },
 
-  that.findByName = function (name, callback) {
+  findByName : function (name, callback) {
     redisClient.get(REDIS_PREFIX + 'user:name:' + name, function (err, user_str) {
       callback(err, JSON.parse(user_str));
     });
-  };
+  },
 
-  that.create = function (user, callback) {
+  create : function (user, callback) {
     redisClient.incr(REDIS_PREFIX + 'global:user_id', function (err, id) {
       user.id = id;
       var data = JSON.stringify(user);
@@ -43,25 +40,24 @@ var User = (function () {
         });
       });
     });
-  };
+  },
 
-  that.findOrCreate = function (params, callback) {
+  findOrCreate : function (params, callback) {
+    var self = this;
     if (!params.name) {
       throw new TypeError("first arg must include 'name' property.");
     }
 
-    that.findByName(params.name, function (err, user) {
+    self.findByName(params.name, function (err, user) {
       if (user) {
         callback(null, user);
       } else {
-        that.create(params, function (err, created_user) {
+        self.create(params, function (err, created_user) {
           callback(null, created_user);
         });
       }
     });
-  };
- 
-  return that;
-}());
+  }
+};
 
 module.exports = User;
